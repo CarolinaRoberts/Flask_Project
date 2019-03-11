@@ -108,7 +108,7 @@ def delete_game(game_id):
 
     session["cart"].remove(game_id)
 
-    flash("The game has been removed from your shopping cart!")
+    flash("The game has been removed from your shopping cart!", 'info')
 
     session.modified = True
 
