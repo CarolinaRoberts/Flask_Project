@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <img src = "{{ url_for('static', filename='img/' + game.image_file) }}">
+
+  <p>"{{ game.title }}" &nbsp Console: {{ game.console.console_name }}</p>
+
+  <p>Price: {{ game.price }}</p> 
+
+  <a class="" href="/add_to_cart/{{game.id}}">Add Game to Cart</a>
+
+{% endblock content %}
