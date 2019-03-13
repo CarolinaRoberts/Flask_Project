@@ -1,8 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
 
-
-
   <p class="titles"> {{ game.title }} </p>
 
   <img src = "{{ url_for('static', filename='img/' + game.image_file) }}">
@@ -13,6 +11,9 @@
 
   <p>Description: {{ game.description }}</p>
 
-  <a class="" href="/add_to_cart/{{game.id}}">Add Game to Cart</a>
+  <a href="/add_to_cart/{{game.id}}"><button class="button">Add Game to Cart</button></a>
+  <br>
+  <br>
+  <a class="" href="https://far-cry.ubisoft.com/game/en-gb/home">Click here for more information</a>
 
 {% endblock content %}

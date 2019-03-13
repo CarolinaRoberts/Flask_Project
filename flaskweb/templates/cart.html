@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>{{ title }}</h1>
+<p class="titles shadow"> {{ current_user.username }} Shopping Cart </p>
 
-<table class="">
+<table>
   <tr><th>Product</th> <th>Quantity</th> <th>Price</th> <th>Total</th></tr>
 
   {% for key, value in display_cart.items() %}
@@ -26,5 +26,7 @@
 <h3>Total: £{{ total }} </h3>
 <br>
 <h3>Number of items: {{ total_quantity }} </h3>
+<br>
+<a href="{{ url_for('checkout') }}"><button class="button">Checkout</button></a>
 
 {% endblock content %}

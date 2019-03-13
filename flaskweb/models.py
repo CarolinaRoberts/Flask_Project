@@ -10,12 +10,13 @@ def load_user(user_id):
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    email = db.Column(db.String(500), unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
     password = db.Column(db.String(60), nullable=False)
+    image = db.Column(db.String(20), nullable=False, default='default.jpg')
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}')"
+        return f"User('{self.username}', '{self.email}', '{self.image}')"
 
 
 
@@ -34,7 +35,7 @@ class Game(db.Model):
     description = db.Column(db.String(120), nullable=False)
     release_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     price = db.Column(db.Numeric(10,2), nullable=False)
-    image_file = db.Column(db.String(30), nullable=False, default='default.jpg')
+    image_file = db.Column(db.String(30), nullable=False, default='gamedefault.jpg')
     stock_level = db.Column(db.Integer, nullable=False)
     console_id = db.Column(db.Integer, db.ForeignKey('console.id'), nullable=False)
 

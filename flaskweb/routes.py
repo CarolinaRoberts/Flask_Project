@@ -1,6 +1,8 @@
+import os
+import secrets
 from flask import render_template, url_for, flash, redirect, request, session
 from flaskweb import app, db, bcrypt
-from flaskweb.forms import Login, Registration
+from flaskweb.forms import Login, Registration, UpdateAccount
 from flaskweb.models import Console, Game, User
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -12,9 +14,40 @@ def home():
     return render_template('home.html', games=games)
 
 
-@app.route("/about")
-def about():
-    return render_template('about.html', title='About')
+@app.route("/checkout")
+@login_required
+def checkout():
+    #add help messages
+    #validation
+    #total price
+    return render_template('checkout.html', cart=cart)
+
+
+@app.route("/confirmation")
+@login_required
+def confirmation():
+    #and you wanna reset the basket too look at how he does it on the third vid
+    flash(f'Thank you for your purchase { current_user.username }!', 'success')
+    return redirect(url_for('home'))
+
+
+
+@app.route("/account", methods=['GET', 'POST'])
+@login_required
+def account():
+    form = UpdateAccount()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Your account has been updated!', 'success')
+        return redirect(url_for('account'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+    image = url_for('static', filename='img/' + current_user.image)
+    return render_template('account.html', title='Account',
+                           image=image, form=form)
 
 
 @app.route("/game/<int:game_id>")
@@ -74,6 +107,7 @@ def add_to_cart(game_id):
 
 
 
+#work on this
 @app.route("/cart", methods=['GET', 'POST'])
 @login_required
 def cart():
