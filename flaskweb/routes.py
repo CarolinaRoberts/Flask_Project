@@ -66,9 +66,11 @@ def logout():
 def add_to_cart(game_id):
     if "cart" not in session:
         session["cart"] = []
-        session["cart"].append(game_id)
-        flash("The game has been added to your shopping cart!", 'info')
-        return redirect("/cart")
+
+    session["cart"].append(game_id)
+
+    flash("The game is added to your shopping cart!")
+    return redirect("/cart")
 
 
 

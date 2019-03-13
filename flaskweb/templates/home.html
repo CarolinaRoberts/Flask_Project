@@ -1,19 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>GAMES</h1>
-   {% for game in games %} 
+<h1 class="titles shadow">GAMES</h1>
+<br>
+{% for game in games %} 
 
-    <a href="{{ url_for('game', game_id=game.id) }}"><img src = "{{ url_for('static', filename='img/' + game.image_file) }}"></a>
-
+<div class="gallery">
+  <a href="{{ url_for('game', game_id=game.id) }}"><img src = "{{ url_for('static', filename='img/' + game.image_file) }}" width="200" height="300"></a>
     <a href="{{ url_for('game', game_id=game.id) }}">
 
-        <p>"{{ game.title }}" &nbsp
-            Console: {{ game.console.console_name }}</p>
-    </a>
+	<p>"{{ game.title }}" 
+	<br>
+	Console: {{ game.console.console_name }}</p>
+</a>
 
+<p>Price: {{ game.price }}</p> 
 
-        <p>Price: {{ game.price }}</p> 
+</div>
 
-
-    {% endfor %}
+{% endfor %}
 {% endblock content %}

@@ -1,9 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
 
+
+
+  <p class="titles"> {{ game.title }} </p>
+
   <img src = "{{ url_for('static', filename='img/' + game.image_file) }}">
 
-  <p>"{{ game.title }}" &nbsp Console: {{ game.console.console_name }}</p>
+  <p>Console: {{ game.console.console_name }}</p>
 
   <p>Price: {{ game.price }}</p> 
 
