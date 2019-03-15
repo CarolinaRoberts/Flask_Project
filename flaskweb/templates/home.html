@@ -1,7 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
+
 <h1 class="titles shadow">GAMES</h1>
+
+<div class="dropdown">
+  <button class="dropbtn">Filter</button>
+  <div class="dropdown-content">
+  <a href="#">Price</a>
+  <a href="#">Console</a>
+  <a href="#">Release Date</a>
+  </div>
+</div>
 <br>
+
 {% for game in games %} 
 
 <div class="gallery">
@@ -15,7 +26,12 @@
 
 <p>Price: {{ game.price }}</p> 
 
+
+
 </div>
+
+
 
 {% endfor %}
 {% endblock content %}
+

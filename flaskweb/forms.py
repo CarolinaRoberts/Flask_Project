@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp, NumberRange
 from flask_login import current_user
 from flaskweb.models import User
 from flask_wtf.file import FileField, FileAllowed
@@ -54,3 +54,17 @@ class UpdateAccount(FlaskForm):
             if user:
                 raise ValidationError('This email is taken. Please choose another.')
 
+
+class Checkout(FlaskForm):
+    full_name = StringField('Full Name', validators=[DataRequired()])
+    email = StringField('Email', validators=([DataRequired(), Email()]))
+    address = StringField('Address', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
+    county = StringField('County', validators=[DataRequired()])
+    post_code =StringField('Post Code',validators=[DataRequired(), Length(min=6, max=8)])
+    name_card = StringField('Name on Card', validators=[DataRequired()])
+    card_num = IntegerField('Credit Card Number',validators=[DataRequired(), NumberRange(16)])
+    exp_date = DateField('Expiry Date', validators=[DataRequired()], format='%d/%m/%Y')
+    cvv = IntegerField('CVV', validators=[DataRequired(), NumberRange(3)])
+    remember = BooleanField('Shipping address same as billing')
+    submit = SubmitField('Confirm Payment')

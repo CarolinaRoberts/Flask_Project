@@ -1,8 +1,7 @@
 import os
-import secrets
 from flask import render_template, url_for, flash, redirect, request, session
 from flaskweb import app, db, bcrypt
-from flaskweb.forms import Login, Registration, UpdateAccount
+from flaskweb.forms import Login, Registration, UpdateAccount, Checkout
 from flaskweb.models import Console, Game, User
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -14,13 +13,17 @@ def home():
     return render_template('home.html', games=games)
 
 
-@app.route("/checkout")
+@app.route("/mycheckout", methods=['GET', 'POST'])
 @login_required
-def checkout():
+def mycheckout():
+    form = Checkout()
+    if form.validate_on_submit():
+        return redirect(url_for('confirmation'))
+    #must have at least one thing in the basket before you can checkout
     #add help messages
     #validation
     #total price
-    return render_template('checkout.html', cart=cart)
+    return render_template('mycheckout.html', cart=cart, form=form)
 
 
 @app.route("/confirmation")
