@@ -3,35 +3,58 @@
 
 <h1 class="titles shadow">GAMES</h1>
 
-<div class="dropdown">
-  <button class="dropbtn">Filter</button>
-  <div class="dropdown-content">
-  <a href="#">Price</a>
-  <a href="#">Console</a>
-  <a href="#">Release Date</a>
-  </div>
+<div class="dropdown dpos1">
+	<button class="dropbtn">Price</button>
+	<div class="dropdown-content">
+		<a href="{{ url_for('price') }}">Price: Games less than £10</a>
+		<a href="{{ url_for('price2') }}">Price: Games £20+</a>
+	</div>
 </div>
+
+<div class="dropdown dpos2">
+	<button class="dropbtn">Console</button>
+	<div class="dropdown-content">
+		<a href="{{ url_for('console1') }}">Console: PlayStaion 4</a>
+		<a href="{{ url_for('console2') }}">Console: Xbox One</a>
+		<a href="{{ url_for('console3') }}">Console: Nintendo Switch</a>
+	</div>
+</div>
+
+<div class="dropdown dpos3">
+	<button class="dropbtn">Age Rating</button>
+	<div class="dropdown-content">
+		<a href="{{ url_for('age') }}">Age Rating: 3</a>
+		<a href="{{ url_for('age7') }}">Age Rating: 7</a>
+		<a href="{{ url_for('age2') }}">Age Rating: 12</a>
+		<a href="{{ url_for('age3') }}">Age Rating: 16</a>
+		<a href="{{ url_for('age4') }}">Age Rating: 18</a>
+	</div>
+</div>
+
 <br>
 
-{% for game in games %} 
+
+{% for game in games %}
+<div class="column2">
+<div class="row">
 
 <div class="gallery">
-  <a href="{{ url_for('game', game_id=game.id) }}"><img src = "{{ url_for('static', filename='img/' + game.image_file) }}" width="200" height="300"></a>
-    <a href="{{ url_for('game', game_id=game.id) }}">
+	<a href="{{ url_for('game', game_id=game.id) }}"><img src = "{{ url_for('static', filename='img/' + game.image_file) }}" width="200" height="300"></a>
+	<a href="{{ url_for('game', game_id=game.id) }}">
 
-	<p>"{{ game.title }}" 
-	<br>
-	Console: {{ game.console.console_name }}</p>
-</a>
+		<p class="boxing2 size">"{{ game.title }}" 
+			
+		Console: {{ game.console.console_name }}</p>
+	</a>
 
-<p>Price: {{ game.price }}</p> 
-
+	<p>Price: £{{ game.price }}</p> 
 
 
 </div>
 
-
-
+</div>
+</div>
 {% endfor %}
+
 {% endblock content %}
 

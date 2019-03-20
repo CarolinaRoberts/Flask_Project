@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for review in reviews %}
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ url_for('static', filename='img/' + review.author.image) }}" width="30" height="30">&nbsp &nbsp
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ review.author.username }}</a>
+              <small class="text-muted">{{ review.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h3>Game Title: {{ review.game_title }}</h3>            
+            <br>
+            <u><i><h2><a class="article-title black" href="{{ url_for('review', review_id=review.id) }}">{{ review.title }}</a></h2></i></u>
+            <p class="article-content boxing">{{ review.content }}</p>
+            <br><br>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

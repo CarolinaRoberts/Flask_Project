@@ -1,8 +1,8 @@
 import os
-from flask import render_template, url_for, flash, redirect, request, session
+from flask import render_template, url_for, flash, redirect, request, session, abort
 from flaskweb import app, db, bcrypt
-from flaskweb.forms import Login, Registration, UpdateAccount, Checkout
-from flaskweb.models import Console, Game, User
+from flaskweb.forms import Login, Registration, UpdateAccount, Checkout, ReviewForm
+from flaskweb.models import Console, Game, User, Review
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -105,7 +105,7 @@ def add_to_cart(game_id):
 
     session["cart"].append(game_id)
 
-    flash("The game is added to your shopping cart!")
+    flash("The game is added to your shopping cart!", 'success')
     return redirect("/cart")
 
 
@@ -154,3 +154,125 @@ def delete_game(game_id):
     return redirect("/cart")
 
 
+#FILTERS
+
+@app.route("/price")
+def price():
+    games = Game.query.filter(Game.price <= 10.00)
+    return render_template('filter.html', title='Price: Less than £10' , games=games) 
+
+
+@app.route("/price2")
+def price2():
+    games2 = Game.query.filter(Game.price >= 20.00)
+    return render_template('filter.html', title='Price: 20+' , games2=games2) 
+
+
+
+@app.route("/console1")
+def console1():
+    my_list = [1,4]
+    games3 = Game.query.filter(Game.console_id.in_(my_list))
+    return render_template('filter.html', title='Console: PlayStation 4' , games3=games3)
+
+
+@app.route("/console2")
+def console2():
+    my_list2 = [2,4]
+    games4 = Game.query.filter(Game.console_id.in_(my_list2))
+    return render_template('filter.html', title='Console: Xbox One' , games4=games4)
+
+
+@app.route("/console3")
+def console3():
+    games5 = Game.query.filter(Game.console_id == 3)
+    return render_template('filter.html', title='Console: Nintendo Switch' , games5=games5) 
+
+
+@app.route("/age")
+def age():
+    games6 = Game.query.filter(Game.age_rating == 3)
+    return render_template('filter.html', title='Age Rating: 3' , games6=games6) 
+
+@app.route("/age7")
+def age7():
+    games10 = Game.query.filter(Game.age_rating == 7)
+    return render_template('filter.html', title='Age Rating: 7' , games10=games10) 
+
+@app.route("/age2")
+def age2():
+    games7 = Game.query.filter(Game.age_rating == 12)
+    return render_template('filter.html', title='Age Rating: 12' , games7=games7)  
+
+@app.route("/age3")
+def age3():
+    games8 = Game.query.filter(Game.age_rating == 16)
+    return render_template('filter.html', title='Age Rating: 16' , games8=games8)   
+
+@app.route("/age4")
+def age4():
+    games9 = Game.query.filter(Game.age_rating == 18)
+    return render_template('filter.html', title='Age Rating: 18' , games9=games9) 
+
+
+
+
+#REVIEWS
+@app.route("/reviews")
+def reviews():
+    reviews = Review.query.all()
+    return render_template('reviews.html', reviews=reviews)
+
+
+@app.route("/review/new", methods=['GET', 'POST'])
+@login_required
+def new_review():
+    form = ReviewForm()
+    if form.validate_on_submit():
+        review = Review(title=form.title.data, content=form.content.data, game_title=form.game.data, author=current_user)
+        db.session.add(review)
+        db.session.commit()
+        flash('Your review has been posted!', 'success')
+        return redirect(url_for('reviews'))
+    return render_template('create_review.html', title='New Review',
+                           form=form, legend='New Review')
+
+
+@app.route("/review/<int:review_id>")
+def review(review_id):
+    review = Review.query.get_or_404(review_id)
+    return render_template('reviewPage.html', title=review.title, review=review)
+
+
+@app.route("/review/<int:review_id>/update", methods=['GET', 'POST'])
+@login_required
+def update_review(review_id):
+    review = Review.query.get_or_404(review_id)
+    if review.author != current_user:
+        abort(403)
+    form = ReviewForm()
+    if form.validate_on_submit():
+        review.title = form.title.data
+        review.game = form.game.data
+        review.content = form.content.data
+        db.session.commit()
+        flash('Your review has been updated!', 'success')
+        return redirect(url_for('review', review_id=review.id))
+    elif request.method == 'GET':
+        form.title.data = review.title
+        form.game.data = review.game_title
+        form.content.data = review.content
+    return render_template('create_review.html', title='Update Review',
+                           form=form, legend='Update Review')
+
+
+@app.route("/review/<int:review_id>/delete", methods=['POST'])
+@login_required 
+def delete_review(review_id):
+    review = Review.query.get_or_404(review_id)
+    if review.author != current_user:
+        abort(403)
+    db.session.delete(review)
+    db.session.commit()
+    flash('Your review has been deleted!', 'success')
+    return redirect(url_for('reviews'))

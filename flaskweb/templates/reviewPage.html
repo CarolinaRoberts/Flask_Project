@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+  <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ url_for('static', filename='img/' + review.author.image) }}" width="30" height="30">&nbsp &nbsp
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ review.author.username }}</a>
+        <small class="text-muted">{{ review.date_posted.strftime('%Y-%m-%d') }}</small>
+        {% if review.author == current_user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_review', review_id=review.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+          </div>
+        {% endif %}
+      </div>
+            <h3>Game Title: {{ review.game_title }}</h3>            
+            <br>
+            <u><i><h2><a class="article-title black" href="{{ url_for('review', review_id=review.id) }}">{{ review.title }}</a></h2></i></u>
+            <p class="article-content boxing">{{ review.content }}</p>
+            <br><br>
+    </div>
+  </article>
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete review?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form action="{{ url_for('delete_review', review_id=review.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

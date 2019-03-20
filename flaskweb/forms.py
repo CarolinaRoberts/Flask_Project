@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp, NumberRange
 from flask_login import current_user
 from flaskweb.models import User
@@ -68,3 +68,10 @@ class Checkout(FlaskForm):
     cvv = IntegerField('CVV', validators=[DataRequired(), NumberRange(3)])
     remember = BooleanField('Shipping address same as billing')
     submit = SubmitField('Confirm Payment')
+
+
+class ReviewForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    game = StringField('Game Title', validators=[DataRequired()])
+    content = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Post')

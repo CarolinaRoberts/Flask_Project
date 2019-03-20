@@ -7,7 +7,7 @@
 html, body {
     background-size:cover;
     background-position: center center;
-    height: 100vh;
+    height: 100%;
 }
 .menu-area li a {
     text-decoration: none;
@@ -62,24 +62,40 @@ nav {
 }
 
 
-.column {
-    float: left;
-    width: 33.33%;
-    padding: 5px;
+
+
+/* Create four equal columns that floats next to each other */
+.column2 {
+  float: right;
+  width: 33.33%;
+  padding: 5px;
 }
 
-
-.row::after {
-    content: "";
-    clear: both;
-    display: table;
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
+/* On screens that are 992px wide or less, go from four columns to two columns */
+@media screen and (max-width: 992px) {
+  .column2 {
+    width: 66.66%;
+  }
+}
+
+/* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column2 {
+    width: 100%;
+  }
+}
 
 .gallery {
     margin: 5px;
     float: left;
-    width: 200px;
+    width: 180px;
 }
 
 
@@ -114,10 +130,21 @@ th{
     width: 100%;
     text-align: left;
     font: bold 16px sans-serif;
-
+    position: sticky;
     padding: 10px 10px;
     margin-top: 50px;
 }
+
+
+.wrapper {
+  min-height: 80%;
+  margin-bottom: -50px;
+}
+.footer,
+.push {
+  height: 146px;
+}
+
 
 .shadow{
     text-shadow: 2px 2px 5px tomato;
@@ -125,10 +152,10 @@ th{
 
 .footer-left{
 
-display: block;
-width: 100%;
-margin-bottom: 5px;
-text-align: center;
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    text-align: center;
 }
 
 .red{
@@ -182,14 +209,9 @@ text-align: center;
 }
 
 
-
-@media (max-width: 800px) {
-  .row {
-    flex-direction: column-reverse;
-  }
-  .col-25 {
+.col-25 {
     margin-bottom: 20px;
-  }
+}
 }
 
 
@@ -732,11 +754,29 @@ text-align: center;
 .dropdown {
   position: absolute;
   display: inline-block;
-  left: 100%;
-  top: 55px;
-
 }
 
+
+.dpos1{
+  left: 100%;
+  top: 55px;
+}
+
+.dpos2{
+  left: 100%;
+  top: 55px;
+}
+
+.dpos3{
+  left: 100%;
+  top: 55px;
+}
+
+
+.positionss{
+  left: 50%;
+  top: 400px;
+}
 .dropdown-content {
   display: none;
   position: absolute;
@@ -761,4 +801,27 @@ text-align: center;
 
 .dropdown:hover .dropbtn {
   background-color: #444;
+}
+
+.boxing{
+  border-top: 1px solid #333;
+  border-bottom:1px solid #333;
+  max-width: 100%;
+  padding:5px;
+}
+
+.boxing2{
+  font-size: 12px;
+  border: 3px solid white;
+  max-width: 120%;
+  padding:0px;
+  font-size: 10px;
+}
+
+.float{
+  float:left;
+}
+
+.black{
+  color: tomato;
 }
