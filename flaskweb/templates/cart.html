@@ -27,6 +27,22 @@
 <br>
 <h3>Number of items: {{ total_quantity }} </h3>
 <br>
-<a href="{{ url_for('mycheckout') }}"><button class="button">Checkout</button></a>
+<p id="demo"></p>
+<a id="change" href="" onclick="myFunction()" class="button">Checkout</a>
 
+{% for key, value in display_cart.items() %}
+<script>
+function myFunction() {
+var link = document.getElementById("change");
+if ({{total_quantity }} == 0 ) {
+  link.href = "{{ url_for('cart') }}";
+  document.getElementById("demo").innerHTML = "There is nothing in your cart to checkout";
+
+}
+  else{
+    link.href = "{{ url_for('mycheckout') }}";
+  }
+}
+</script>
+{% endfor %}
 {% endblock content %}

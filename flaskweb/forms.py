@@ -70,6 +70,7 @@ class Checkout(FlaskForm):
     submit = SubmitField('Confirm Payment')
 
 
+
 class ReviewForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     game = StringField('Game Title', validators=[DataRequired()])

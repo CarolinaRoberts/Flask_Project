@@ -19,17 +19,12 @@ def mycheckout():
     form = Checkout()
     if form.validate_on_submit():
         return redirect(url_for('confirmation'))
-    #must have at least one thing in the basket before you can checkout
-    #add help messages
-    #validation
-    #total price
-    return render_template('mycheckout.html', cart=cart, form=form)
+    return render_template('mycheckout.html', form=form)
 
 
 @app.route("/confirmation")
 @login_required
 def confirmation():
-    #and you wanna reset the basket too look at how he does it on the third vid
     flash(f'Thank you for your purchase { current_user.username }!', 'success')
     return redirect(url_for('home'))
 
@@ -70,7 +65,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit() 
-        flash('Thank you for creating an account!. You can now log in.', 'success')
+        flash('Thank you for creating an account! You can now log in.', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
@@ -110,7 +105,6 @@ def add_to_cart(game_id):
 
 
 
-#work on this
 @app.route("/cart", methods=['GET', 'POST'])
 @login_required
 def cart():
@@ -132,6 +126,7 @@ def cart():
             else:
                 cart[game.id] = {"quantity":1, "title": game.title, "price":game.price}
             total_quantity = sum(item['quantity'] for item in cart.values())
+
 
 
         return render_template("cart.html", title='Your Shopping Cart', display_cart = cart, total = total_price, total_quantity = total_quantity)
@@ -164,8 +159,8 @@ def price():
 
 @app.route("/price2")
 def price2():
-    games2 = Game.query.filter(Game.price >= 20.00)
-    return render_template('filter.html', title='Price: 20+' , games2=games2) 
+    games2 = Game.query.filter(Game.price >= 25.00)
+    return render_template('filter.html', title='Price: £25+' , games2=games2) 
 
 
 

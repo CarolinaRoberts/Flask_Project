@@ -806,7 +806,7 @@ th{
 .boxing{
   border-top: 1px solid #333;
   border-bottom:1px solid #333;
-  max-width: 100%;
+  max-width: 70%;
   padding:5px;
 }
 
@@ -822,6 +822,10 @@ th{
   float:left;
 }
 
+.floatr{
+  float: right;
+}
 .black{
   color: tomato;
 }
+

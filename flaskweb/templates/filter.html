@@ -6,7 +6,7 @@
 	<button class="dropbtn">Price</button>
 	<div class="dropdown-content">
 		<a href="{{ url_for('price') }}">Price: Games less than £10</a>
-		<a href="{{ url_for('price2') }}">Price: Games £20+</a>
+		<a href="{{ url_for('price2') }}">Price: Games £25+</a>
 	</div>
 </div>
 
@@ -57,25 +57,25 @@
 
 
 {% for game in games2 %}
-<div class="column2">
+<div class="column2 float">
 <div class="row"> 
-
 
 <div class="gallery">
 	<a href="{{ url_for('game', game_id=game.id) }}"><img src = "{{ url_for('static', filename='img/' + game.image_file) }}" width="200" height="300"></a>
 	<a href="{{ url_for('game', game_id=game.id) }}">
 
-		<p class="size">"{{ game.title }}" 
+		<p>"{{ game.title }}" 
 			
 		Console: {{ game.console.console_name }}</p>
 	</a>
 
-	<p>Price: £{{ game.price }}</p> 
+	<p>Price: £{{ game.price }}</p>
 
 
 </div>
 </div>
 </div>
+
 {% endfor %}
 
 
